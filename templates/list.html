@@ -1,0 +1,43 @@
+{% extends "main_template.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <table class="table table-hover col-12">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">İsim</th>
+                    <th scope="col">Adres</th>
+                    <th scope="col">Yerleştirme Tarihi</th>
+                    <th scope="col">Durum</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody id="tableBodyKonteynerListesi">
+                </tbody>
+            </table>
+            <script>
+                var tableBody = $("#tableBodyKonteynerListesi")
+                var counter = 1;
+                for (var index in konteynerListesi) {
+                    tableBody.append("<tr>\n" +
+                        '<th scope="row">' + counter + '</th>\n' +
+                        "<td>" + konteynerListesi[index].isim + "</td>\n" +
+                        "<td>" + konteynerListesi[index].adres + "</td>\n" +
+                        "<td>" + konteynerListesi[index].koyulmaTarihi + "</td>\n" +
+                        "<td>" + konteynerListesi[index].durum + "</td>\n" +
+                        '<td>' +
+                        '<form id="konteynerForm' + konteynerListesi[index].id + '" method="post" action="{% url "mapview" %}" style="display:none;">' + "{% csrf_token %}" +
+                        '<input type="text" value="' + konteynerListesi[index].id + '" name="konteynerId"/>' +
+                        '</form><input type="submit" form="konteynerForm' + konteynerListesi[index].id + '" class="btn btn-primary" value="Haritada Gör"/></td>' +
+                        "</tr>");
+                    counter++
+                }
+
+            </script>
+        </div>
+    </div>
+
+{% endblock %}

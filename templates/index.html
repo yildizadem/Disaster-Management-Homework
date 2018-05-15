@@ -1,0 +1,60 @@
+{% extends 'main_template.html' %}
+{% block title %}Anasayfa{% endblock %}
+
+{% block content %}
+    <div class="text-center position-absolute w-100" style="bottom: 40px;">
+        <div class="fa fa-angle-double-down border rounded bg-dark text-white p-3" id="asagiButon"></div>
+    </div>
+    <div class="container">
+        <div class="row" style="height: calc(100vh - 56px);">
+            {% load static %}
+            <div class="d-flex align-items-center w-100">
+                <div class="text-center col-12">
+                    <img src="{% static "image/itu-logo.png" %}" alt="itu-logo.png" height="300">
+                    <h1 class="text-primary">Deprem Konteynırları Uygulması</h1>
+                    <h3>GIT 520E: GIS for Disaster Management</h3>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h3 class="my-3">Deprem Konteynerleri Malzeme Listesi</h3>
+                <table class="table table-hover col-12">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Malzeme İsmi</th>
+                        <th scope="col">Adet</th>
+                        <th scope="col">Özellikler</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tableBodyMalzemeListesi">
+                    </tbody>
+                </table>
+                <script>
+                    var tableBody = $("#tableBodyMalzemeListesi");
+                    var counter = 1;
+                    for (var index in malzemeListesi) {
+                        tableBody.append("<tr>\n" +
+                            '<th scope="row">' + counter + '</th>\n' +
+                            "<td>" + malzemeListesi[index].isim + "</td>\n" +
+                            "<td>" + malzemeListesi[index].miktar + "</td>\n" +
+                            "<td>" +
+                            '<ul id="malzemeOzellikleriListesi' + counter + '">' +
+                            '</ul></td>\n' +
+                            "</tr>");
+                        var malzemeOzellikleriListesi = $('#malzemeOzellikleriListesi' + counter);
+                        for (var i in malzemeListesi[index].ozellikler) {
+                            malzemeOzellikleriListesi.append('<li>' + malzemeListesi[index].ozellikler[i] + '</li>');
+                        }
+                        counter++;
+
+                    }
+
+                </script>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "main_template.html" %}
+{% block cssElement %}
+    {% comment %}<link rel="stylesheet" href="https://js.arcgis.com/3.24/esri/css/esri.css">
+    <script src="https://js.arcgis.com/3.24/"></script>{% endcomment %}
+{% endblock %}
+
+{% block jsElement %}
+    <link rel="stylesheet" href="https://js.arcgis.com/3.24/esri/css/esri.css">
+    <script src="https://js.arcgis.com/3.24/"></script>
+    {% load static %}
+    <script src="{% static "js/mapping.js" %}" defer></script>
+    <script>
+        {% if konteynerId%}
+            window.onload = function () {
+                function konteynerBul(item) {
+                    return item.id ==
+                    {{ konteynerId }}
+                }
+
+                var konteyner = konteynerListesi.find(konteynerBul)
+                map.centerAndZoom([konteyner.koordinat.long, konteyner.koordinat.lat], 16);
+            };
+        {% endif %}
+    </script>
+{% endblock %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+    <div id="mapDiv"></div>
+    <div id="basemapsGalleryButton" class="fa fa-map depth-1"></div>
+    <div id="basemapsGallery" class="depth-1"></div>
+{% endblock %}
